@@ -1,0 +1,21 @@
+{
+  "name": "cytologytrainer-bot",
+  "version": "1.0.0",
+  "description": "Telegram-бот платформы CytologyTrainer — тесты по клинической цитологии",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "cytology",
+    "medicine"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "telegraf": "^4.16.3"
+  }
+}
