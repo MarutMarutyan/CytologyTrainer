@@ -161,6 +161,12 @@ async function handleAnswer(ctx, userId, answerIndex) {
       questions: session.answers,
     });
 
+    const shareText = encodeURIComponent(
+      `Проверил знания по цитологии — ${session.score} из ${total} (${percent}%)!\n\n` +
+      `Тренируюсь в @CytoBot_bot — бесплатные тесты по Bethesda и TBSRTC.\n` +
+      `Канал: t.me/cytology_trainer`
+    );
+
     await ctx.reply(
       `${emoji} *Тест завершён!*\n\n` +
       `Результат: *${session.score} из ${total}* (${percent}%)\n\n` +
@@ -171,7 +177,14 @@ async function handleAnswer(ctx, userId, answerIndex) {
         : 'Рекомендуем повторить материал и попробовать снова.') +
       '\n\n📊 /stats — посмотреть свою статистику\n' +
       'Для нового теста нажми /test',
-      { parse_mode: 'Markdown' }
+      {
+        parse_mode: 'Markdown',
+        reply_markup: {
+          inline_keyboard: [[
+            { text: '📤 Поделиться с коллегой', url: `https://t.me/share/url?url=https://t.me/CytoBot_bot&text=${shareText}` }
+          ]]
+        }
+      }
     );
 
     sessions.delete(userId);
