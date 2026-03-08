@@ -18,7 +18,20 @@ const CATEGORY_LABELS = {
   'LSIL': 'LSIL (низкоградусное)',
   'HSIL': 'HSIL (высокоградусное)',
   'glandular': 'Железистые аномалии',
-  'general': 'Общие вопросы'
+  'general': 'Общие вопросы',
+  'thyroid_general': 'ЩЖ: Общие вопросы',
+  'thyroid_I': 'ЩЖ: Кат. I (недиагн.)',
+  'thyroid_II': 'ЩЖ: Кат. II (доброкач.)',
+  'thyroid_III': 'ЩЖ: Кат. III (AUS/FLUS)',
+  'thyroid_IV': 'ЩЖ: Кат. IV (ФН)',
+  'thyroid_V': 'ЩЖ: Кат. V (подозр.)',
+  'thyroid_VI': 'ЩЖ: Кат. VI (злокач.)',
+};
+
+// Группировка по темам
+const TOPIC_LABELS = {
+  'gynecology': '🔬 Гинекологическая цитология (Bethesda)',
+  'thyroid': '🦋 Щитовидная железа (TBSRTC)',
 };
 
 /**
@@ -171,7 +184,7 @@ async function handleAnswer(ctx, userId, answerIndex) {
  * Обработчик команды /test
  */
 function registerTestHandler(bot) {
-  // /test — показываем меню выбора категории
+  // /test — показываем меню выбора темы (гинекология / щитовидная)
   bot.command('test', async (ctx) => {
     // Если уже в тесте — спрашиваем
     const userId = ctx.from.id;
@@ -180,25 +193,51 @@ function registerTestHandler(bot) {
       await ctx.reply('Предыдущий тест прерван. Выбирай новую тему:');
     }
 
-    const categories = [...new Set(allQuestions.map(q => q.category))];
-
-    const keyboard = categories.map(cat => ([{
-      text: `${CATEGORY_LABELS[cat] || cat} (${allQuestions.filter(q => q.category === cat).length})`,
-      callback_data: `test_cat:${cat}`
+    const topics = [...new Set(allQuestions.map(q => q.topic))];
+    const keyboard = topics.map(topic => ([{
+      text: `${TOPIC_LABELS[topic] || topic} (${allQuestions.filter(q => q.topic === topic).length})`,
+      callback_data: `test_topic:${topic}`,
     }]));
 
-    // Добавляем кнопку "Все темы"
-    keyboard.unshift([{
-      text: `🔀 Все темы (${allQuestions.length})`,
-      callback_data: 'test_cat:all'
+    // Кнопка «Все вопросы»
+    keyboard.push([{
+      text: `🔀 Все вопросы (${allQuestions.length})`,
+      callback_data: 'test_cat:all',
     }]);
 
     await ctx.reply(
-      '📝 *Тест по цервикальной цитологии (Bethesda)*\n\n' +
-      'Выбери тему:',
+      '📝 *Выбери раздел цитологии:*',
       {
         parse_mode: 'Markdown',
-        reply_markup: { inline_keyboard: keyboard }
+        reply_markup: { inline_keyboard: keyboard },
+      }
+    );
+  });
+
+  // Выбор категории внутри темы
+  bot.action(/^test_topic:(.+)$/, async (ctx) => {
+    await ctx.answerCbQuery();
+    const topic = ctx.match[1];
+
+    const topicQuestions = allQuestions.filter(q => q.topic === topic);
+    const categories = [...new Set(topicQuestions.map(q => q.category))];
+
+    const keyboard = categories.map(cat => ([{
+      text: `${CATEGORY_LABELS[cat] || cat} (${topicQuestions.filter(q => q.category === cat).length})`,
+      callback_data: `test_cat:${cat}`,
+    }]));
+
+    // Кнопка «Все категории темы»
+    keyboard.unshift([{
+      text: `🔀 Все категории (${topicQuestions.length})`,
+      callback_data: `test_cat:topic_${topic}`,
+    }]);
+
+    await ctx.reply(
+      `📝 *${TOPIC_LABELS[topic] || topic}*\n\nВыбери категорию:`,
+      {
+        parse_mode: 'Markdown',
+        reply_markup: { inline_keyboard: keyboard },
       }
     );
   });
@@ -214,7 +253,11 @@ function registerTestHandler(bot) {
 
     if (category === 'all') {
       testQuestions = allQuestions;
-      title = 'Тест: все темы Bethesda';
+      title = 'Тест: все вопросы';
+    } else if (category.startsWith('topic_')) {
+      const topic = category.replace('topic_', '');
+      testQuestions = allQuestions.filter(q => q.topic === topic);
+      title = `Тест: ${TOPIC_LABELS[topic] || topic}`;
     } else {
       testQuestions = allQuestions.filter(q => q.category === category);
       title = `Тест: ${CATEGORY_LABELS[category] || category}`;

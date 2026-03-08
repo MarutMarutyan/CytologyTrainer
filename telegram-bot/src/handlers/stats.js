@@ -8,6 +8,13 @@ const CATEGORY_LABELS = {
   'HSIL': 'HSIL (высокоградусное)',
   'glandular': 'Железистые аномалии',
   'general': 'Общие вопросы',
+  'thyroid_general': 'ЩЖ: Общие',
+  'thyroid_I': 'ЩЖ: Кат. I',
+  'thyroid_II': 'ЩЖ: Кат. II',
+  'thyroid_III': 'ЩЖ: Кат. III',
+  'thyroid_IV': 'ЩЖ: Кат. IV',
+  'thyroid_V': 'ЩЖ: Кат. V',
+  'thyroid_VI': 'ЩЖ: Кат. VI',
 };
 
 /**
