@@ -12,7 +12,7 @@
     ],
     "correct": 1,
     "explanation": "ASC-US (Atypical Squamous Cells of Undetermined Significance) — атипичные клетки плоского эпителия неопределённого значения.",
-    "reference_url": "https://screening.iarc.fr/atlasclassifbethesda.php"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=F1a1a&lang=1"
   },
   {
     "id": 2,
@@ -27,7 +27,7 @@
     ],
     "correct": 0,
     "explanation": "NILM — Negative for Intraepithelial Lesion or Malignancy. Означает отсутствие интраэпителиального поражения или злокачественности.",
-    "reference_url": "https://screening.iarc.fr/atlasclassifbethesda.php"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=D1&lang=1"
   },
   {
     "id": 3,
@@ -57,7 +57,7 @@
     ],
     "correct": 1,
     "explanation": "Для жидкостных препаратов (LBP) минимум — 5 000 хорошо визуализируемых плоскоклеточных элементов. Для обычных мазков — 8 000–12 000 клеток.",
-    "reference_url": "https://screening.iarc.fr/atlasclassifbethesda.php"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=A1&lang=1"
   },
   {
     "id": 5,
@@ -72,7 +72,7 @@
     ],
     "correct": 1,
     "explanation": "Любой препарат с атипичными клетками (ASC-US, AGC или более тяжёлая патология) по определению считается удовлетворительным для оценки.",
-    "reference_url": "https://screening.iarc.fr/atlasclassifbethesda.php"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=A1&lang=1"
   },
   {
     "id": 6,
@@ -87,7 +87,7 @@
     ],
     "correct": 1,
     "explanation": "В системе Bethesda 2014 — две категории: «удовлетворительный» (satisfactory) и «неудовлетворительный» (unsatisfactory). Промежуточная категория «borderline» была упразднена в 2001 году.",
-    "reference_url": "https://screening.iarc.fr/atlasclassifbethesda.php"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=A1&lang=1"
   },
   {
     "id": 7,
@@ -102,7 +102,7 @@
     ],
     "correct": 1,
     "explanation": "У пациенток после радиотерапии, химиотерапии или в постменопаузе порог 5 000 клеток не применяется жёстко. Препараты с менее чем 2 000 клеток считаются неудовлетворительными в большинстве случаев.",
-    "reference_url": "https://screening.iarc.fr/atlasclassifbethesda.php"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=A1&lang=1"
   },
   {
     "id": 8,
@@ -162,7 +162,7 @@
     ],
     "correct": 1,
     "explanation": "Репаративные клетки формируют когезивные пласты с характерной архитектурой «косяка рыб» (school of fish) или «растягивания ириски» (taffy pull). Ядра увеличены, но контуры ровные, хроматин мелкозернистый, нуклеоли заметные.",
-    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=E3a&lang=1"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=E1a&lang=1"
   },
   {
     "id": 12,
@@ -177,7 +177,7 @@
     ],
     "correct": 1,
     "explanation": "При реактивных изменениях ядра увеличены, но контуры ровные и гладкие, хроматин мелкозернистый и равномерно распределён, часто видны нуклеоли. Это отличает их от атипичных и неопластических процессов.",
-    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=E3a&lang=1"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=E1a&lang=1"
   },
   {
     "id": 13,
@@ -192,7 +192,7 @@
     ],
     "correct": 1,
     "explanation": "Лимфоцитарный (фолликулярный) цервицит характеризуется полиморфной популяцией лимфоцитов с или без tingible body macrophages, образованных зрелыми лимфоидными фолликулами в субэпителии шейки матки.",
-    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=E3a&lang=1"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=E1a&lang=1"
   },
   {
     "id": 14,
@@ -207,7 +207,7 @@
     ],
     "correct": 1,
     "explanation": "При лучевых изменениях клетки значительно увеличены (цитомегалия), но Я/Ц соотношение существенно не повышается. Цитоплазма вакуолизирована, полихроматофильная. Могут быть двуядерные клетки и дегенеративные изменения.",
-    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=E3a&lang=1"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=E1a&lang=1"
   },
   {
     "id": 15,
@@ -222,7 +222,7 @@
     ],
     "correct": 1,
     "explanation": "Реактивные железистые клетки при ВМС (IUD) содержат крупные вакуоли, смещающие ядро — создавая вид «перстня» (signet-ring). Клетки обычно в группах по 5–15, на чистом фоне.",
-    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=E3a&lang=1"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=E1c&lang=1"
   },
   {
     "id": 16,
@@ -567,7 +567,7 @@
     ],
     "correct": 1,
     "explanation": "Двухуровневая система: LSIL отражает в основном транзиторную продуктивную ВПЧ-инфекцию, а HSIL — поражения с высоким риском перехода в предрак и рак. Это основано на биологии ВПЧ-ассоциированных поражений.",
-    "reference_url": "https://screening.iarc.fr/atlasclassifbethesda.php"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=D1&lang=1"
   },
   {
     "id": 39,
@@ -582,7 +582,7 @@
     ],
     "correct": 1,
     "explanation": "Первая конференция по Bethesda-системе прошла в декабре 1988 года в Национальных институтах здоровья (NIH) в городе Бетесда, Мэриленд, США.",
-    "reference_url": "https://screening.iarc.fr/atlasclassifbethesda.php"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=D1&lang=1"
   },
   {
     "id": 40,
@@ -612,7 +612,7 @@
     ],
     "correct": 2,
     "explanation": "Для обычного (conventional) мазка минимум — 8 000–12 000 хорошо сохранённых плоскоклеточных элементов. Для LBP — 5 000 клеток.",
-    "reference_url": "https://screening.iarc.fr/atlasclassifbethesda.php"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=A1&lang=1"
   },
   {
     "id": 42,
@@ -627,7 +627,7 @@
     ],
     "correct": 1,
     "explanation": "Arias-Stella реакция при беременности даёт стимулированные железистые клетки с крупными гиперхромными ядрами, множественными выраженными нуклеолями — что может быть ошибочно принято за железистую неоплазию.",
-    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=E3a&lang=1"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=E1a&lang=1"
   },
   {
     "id": 43,
@@ -642,7 +642,7 @@
     ],
     "correct": 0,
     "explanation": "Децидуальные клетки могут имитировать ASC-US/LSIL (когда цитоплазма обильная) или ASC-H/HSIL (при высоком Я/Ц). Отличают их: крупный размер, гладкие контуры ядер, мелкозернистый хроматин, заметные нуклеоли.",
-    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=E3a&lang=1"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=E1a&lang=1"
   },
   {
     "id": 44,
@@ -717,7 +717,7 @@
     ],
     "correct": 1,
     "explanation": "Наличие или отсутствие эндоцервикального/трансформационного компонента отмечается в отчёте. Его отсутствие не делает мазок неудовлетворительным, но информация помогает клиницисту оценить качество забора.",
-    "reference_url": "https://screening.iarc.fr/atlasclassifbethesda.php"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=A1&lang=1"
   },
   {
     "id": 49,
@@ -747,6 +747,6 @@
     ],
     "correct": 1,
     "explanation": "Bethesda 2014 выделяет: плоскоклеточные аномалии (ASC-US, ASC-H, LSIL, HSIL, плоскоклеточный рак) и железистые аномалии (AGC, AIS, аденокарцинома эндоцервикальная/эндометриальная/экстраутеринная). Также — «Other malignant neoplasms».",
-    "reference_url": "https://screening.iarc.fr/atlasclassifbethesda.php"
+    "reference_url": "https://screening.iarc.fr/atlascyto_list.php?cat=D1&lang=1"
   }
 ]
