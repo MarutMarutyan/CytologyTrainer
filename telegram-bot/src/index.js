@@ -34,7 +34,16 @@ registerScheduler(bot);
 
 // Запускаем бота
 bot.launch()
-  .then(() => console.log('Бот запущен! Нажми Ctrl+C для остановки.'))
+  .then(() => {
+    console.log('Бот запущен! Нажми Ctrl+C для остановки.');
+    return bot.telegram.setMyCommands([
+      { command: 'start',  description: '👋 Начать / главное меню' },
+      { command: 'test',   description: '📝 Пройти тест' },
+      { command: 'learn',  description: '📖 Теория и учебные материалы' },
+      { command: 'stats',  description: '📊 Моя статистика' },
+      { command: 'help',   description: '❓ Помощь и список команд' },
+    ]);
+  })
   .catch((err) => {
     console.error('Ошибка запуска:', err.message);
     process.exit(1);
