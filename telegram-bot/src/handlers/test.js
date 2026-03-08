@@ -32,13 +32,16 @@ function shuffle(arr) {
 /**
  * Отправляет вопрос пользователю
  */
+// Кириллические буквы для вариантов ответов
+const LETTERS = ['А', 'Б', 'В', 'Г'];
+
 async function sendQuestion(ctx, session) {
   const q = session.questions[session.questionIndex];
   const total = session.questions.length;
   const current = session.questionIndex + 1;
 
   const optionsText = q.options
-    .map((opt, i) => `${String.fromCharCode(65 + i)}) ${opt}`)
+    .map((opt, i) => `${LETTERS[i]}) ${opt}`)
     .join('\n');
 
   await ctx.reply(
@@ -160,7 +163,7 @@ function registerTestHandler(bot) {
       session.score++;
       await ctx.reply('✅ Верно!\n\n' + q.explanation, replyOptions);
     } else {
-      const correctLetter = String.fromCharCode(65 + q.correct);
+      const correctLetter = LETTERS[q.correct];
       await ctx.reply(
         `❌ Неверно. Правильный ответ: *${correctLetter}) ${q.options[q.correct]}*\n\n` +
         q.explanation,
