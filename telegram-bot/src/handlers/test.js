@@ -1,17 +1,42 @@
-const questions = require('../data/questions.json');
+const allQuestions = require('../data/questions.json');
 
-// Хранилище активных сессий: userId -> { questionIndex, score, answers }
+// Хранилище активных сессий: userId -> { questions, questionIndex, score }
 const sessions = new Map();
+
+// Количество вопросов в одном тесте
+const TEST_SIZE = 10;
+
+// Названия категорий на русском
+const CATEGORY_LABELS = {
+  'specimen_adequacy': 'Адекватность препарата',
+  'NILM': 'NILM (норма)',
+  'ASC': 'ASC (атипичные клетки)',
+  'LSIL': 'LSIL (низкоградусное)',
+  'HSIL': 'HSIL (высокоградусное)',
+  'glandular': 'Железистые аномалии',
+  'general': 'Общие вопросы'
+};
+
+/**
+ * Перемешивает массив (Fisher-Yates)
+ */
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 /**
  * Отправляет вопрос пользователю
  */
 async function sendQuestion(ctx, session) {
-  const q = questions[session.questionIndex];
-  const total = questions.length;
+  const q = session.questions[session.questionIndex];
+  const total = session.questions.length;
   const current = session.questionIndex + 1;
 
-  // Формируем варианты ответов с буквами
   const optionsText = q.options
     .map((opt, i) => `${String.fromCharCode(65 + i)}) ${opt}`)
     .join('\n');
@@ -26,27 +51,80 @@ async function sendQuestion(ctx, session) {
 }
 
 /**
+ * Запускает тест с выбранными вопросами
+ */
+async function startTest(ctx, userId, testQuestions, title) {
+  const selected = shuffle(testQuestions).slice(0, TEST_SIZE);
+
+  sessions.set(userId, {
+    questions: selected,
+    questionIndex: 0,
+    score: 0,
+  });
+
+  await ctx.reply(
+    `📝 *${title}*\n\n` +
+    `Вопросов: ${selected.length}\n` +
+    'На каждый вопрос отправляй букву ответа: А, Б, В или Г\n\n' +
+    'Поехали!',
+    { parse_mode: 'Markdown' }
+  );
+
+  await sendQuestion(ctx, sessions.get(userId));
+}
+
+/**
  * Обработчик команды /test
  */
 function registerTestHandler(bot) {
-  // Начало теста
+  // /test — показываем меню выбора категории
   bot.command('test', async (ctx) => {
-    const userId = ctx.from.id;
+    const categories = [...new Set(allQuestions.map(q => q.category))];
 
-    sessions.set(userId, {
-      questionIndex: 0,
-      score: 0,
-    });
+    const keyboard = categories.map(cat => ([{
+      text: `${CATEGORY_LABELS[cat] || cat} (${allQuestions.filter(q => q.category === cat).length})`,
+      callback_data: `test_cat:${cat}`
+    }]));
+
+    // Добавляем кнопку "Все темы"
+    keyboard.unshift([{
+      text: `🔀 Все темы (${allQuestions.length})`,
+      callback_data: 'test_cat:all'
+    }]);
 
     await ctx.reply(
-      '📝 *Тест по гинекологической цитологии (Bethesda)*\n\n' +
-      `Всего вопросов: ${questions.length}\n` +
-      'На каждый вопрос отправляй букву ответа: А, Б, В или Г\n\n' +
-      'Поехали!',
-      { parse_mode: 'Markdown' }
+      '📝 *Тест по цервикальной цитологии (Bethesda)*\n\n' +
+      'Выбери тему:',
+      {
+        parse_mode: 'Markdown',
+        reply_markup: { inline_keyboard: keyboard }
+      }
     );
+  });
 
-    await sendQuestion(ctx, sessions.get(userId));
+  // Обработка выбора категории
+  bot.action(/^test_cat:(.+)$/, async (ctx) => {
+    await ctx.answerCbQuery();
+    const category = ctx.match[1];
+    const userId = ctx.from.id;
+
+    let testQuestions;
+    let title;
+
+    if (category === 'all') {
+      testQuestions = allQuestions;
+      title = 'Тест: все темы Bethesda';
+    } else {
+      testQuestions = allQuestions.filter(q => q.category === category);
+      title = `Тест: ${CATEGORY_LABELS[category] || category}`;
+    }
+
+    if (testQuestions.length === 0) {
+      await ctx.reply('В этой категории пока нет вопросов.');
+      return;
+    }
+
+    await startTest(ctx, userId, testQuestions, title);
   });
 
   // Обработка ответов
@@ -54,43 +132,52 @@ function registerTestHandler(bot) {
     const userId = ctx.from.id;
     const session = sessions.get(userId);
 
-    if (!session) return; // нет активной сессии
+    if (!session) return;
 
     const text = ctx.message.text.trim().toUpperCase();
     const letterMap = { 'А': 0, 'A': 0, 'Б': 1, 'B': 1, 'В': 2, 'V': 2, 'Г': 3, 'G': 3 };
 
-    // Проверяем что ответ — буква
     if (!(text in letterMap)) {
       await ctx.reply('Пожалуйста, отправь букву ответа: А, Б, В или Г');
       return;
     }
 
     const answerIndex = letterMap[text];
-    const q = questions[session.questionIndex];
+    const q = session.questions[session.questionIndex];
     const isCorrect = answerIndex === q.correct;
+
+    // Inline-кнопка "Посмотреть в атласе"
+    const replyOptions = { parse_mode: 'Markdown' };
+    if (q.reference_url) {
+      replyOptions.reply_markup = {
+        inline_keyboard: [[
+          { text: '🔬 Посмотреть в атласе IARC', url: q.reference_url }
+        ]]
+      };
+    }
 
     if (isCorrect) {
       session.score++;
-      await ctx.reply('✅ Верно!\n\n' + q.explanation, { parse_mode: 'Markdown' });
+      await ctx.reply('✅ Верно!\n\n' + q.explanation, replyOptions);
     } else {
       const correctLetter = String.fromCharCode(65 + q.correct);
       await ctx.reply(
         `❌ Неверно. Правильный ответ: *${correctLetter}) ${q.options[q.correct]}*\n\n` +
         q.explanation,
-        { parse_mode: 'Markdown' }
+        replyOptions
       );
     }
 
     session.questionIndex++;
 
-    // Проверяем конец теста
-    if (session.questionIndex >= questions.length) {
-      const percent = Math.round((session.score / questions.length) * 100);
+    if (session.questionIndex >= session.questions.length) {
+      const total = session.questions.length;
+      const percent = Math.round((session.score / total) * 100);
       let emoji = percent >= 80 ? '🎉' : percent >= 50 ? '👍' : '📚';
 
       await ctx.reply(
         `${emoji} *Тест завершён!*\n\n` +
-        `Результат: *${session.score} из ${questions.length}* (${percent}%)\n\n` +
+        `Результат: *${session.score} из ${total}* (${percent}%)\n\n` +
         (percent >= 80
           ? 'Отличный результат! Вы хорошо знаете тему.'
           : percent >= 50
@@ -102,7 +189,6 @@ function registerTestHandler(bot) {
 
       sessions.delete(userId);
     } else {
-      // Следующий вопрос
       await sendQuestion(ctx, session);
     }
   });
