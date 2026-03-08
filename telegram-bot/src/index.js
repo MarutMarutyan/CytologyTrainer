@@ -8,6 +8,7 @@ const { registerHelpHandler } = require('./handlers/help');
 const { registerLearnHandler } = require('./handlers/learn');
 const { registerAdminHandler } = require('./handlers/admin');
 const { trackUser } = require('./users');
+const { registerScheduler } = require('./scheduler');
 
 // Проверяем токен
 if (!process.env.TELEGRAM_BOT_TOKEN) {
@@ -27,6 +28,9 @@ registerTestHandler(bot);
 
 // Трекинг всех входящих сообщений
 bot.on('message', (ctx) => trackUser(ctx));
+
+// Запускаем планировщик постов
+registerScheduler(bot);
 
 // Запускаем бота
 bot.launch()
