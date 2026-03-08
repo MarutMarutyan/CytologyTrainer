@@ -1,8 +1,11 @@
 /**
  * Обработчик команды /start
  */
+const { trackUser } = require('../users');
+
 function registerStartHandler(bot) {
   bot.start((ctx) => {
+    trackUser(ctx);
     const name = ctx.from.first_name || 'коллега';
     ctx.reply(
       `Добро пожаловать, ${name}! 👋\n\n` +
