@@ -2262,7 +2262,7 @@
     ],
     "correct": 2,
     "explanation": "TBSRTC выделяет 6 диагностических категорий: I — недиагностический/неудовлетворительный, II — доброкачественный, III — атипия неопределённого значения (AUS/FLUS), IV — фолликулярная неоплазия (FN/SFN), V — подозрение на злокачественность, VI — злокачественный.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytbethesda.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroiddiagnostic.html"
   },
   {
     "id": 152,
@@ -2277,7 +2277,7 @@
     ],
     "correct": 1,
     "explanation": "Первая конференция NCI по цитологии щитовидной железы прошла в октябре 2007 года. Атлас TBSRTC опубликован в 2010 году. Второе издание вышло в 2018 году, третье — в 2023.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytbethesda.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroiddiagnostic.html"
   },
   {
     "id": 153,
@@ -2292,7 +2292,7 @@
     ],
     "correct": 1,
     "explanation": "Тонкоигольная аспирационная биопсия (ТАБ, FNA — Fine Needle Aspiration) — стандартный метод получения цитологического материала из узлов щитовидной железы, обычно под контролем УЗИ.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytbethesda.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroiddiagnostic.html"
   },
   {
     "id": 154,
@@ -2307,7 +2307,7 @@
     ],
     "correct": 1,
     "explanation": "Категория I — образец не содержит достаточного количества клеток фолликулярного эпителия для диагностики. Рекомендация: повторная ТАБ через 1–3 месяца.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytnondiagnostic.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidnduns.html"
   },
   {
     "id": 155,
@@ -2322,7 +2322,7 @@
     ],
     "correct": 1,
     "explanation": "Минимум: 6 групп хорошо сохранённых фолликулярных клеток, каждая содержащая не менее 10 клеток, на минимум двух слайдах. Исключение: цитология, соответствующая тиреоидиту или коллоидному зобу.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytnondiagnostic.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidnduns.html"
   },
   {
     "id": 156,
@@ -2337,7 +2337,7 @@
     ],
     "correct": 1,
     "explanation": "Кистозная жидкость без достаточного количества фолликулярных клеток классифицируется как категория I (недиагностический). Однако наличие атипичных клеток делает материал диагностическим.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytnondiagnostic.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidnduns.html"
   },
   {
     "id": 157,
@@ -2352,7 +2352,7 @@
     ],
     "correct": 1,
     "explanation": "Категория II включает: коллоидный узел (аденоматоидный/гиперпластический), тиреоидит Хашимото (лимфоцитарный), подострый (гранулёматозный) тиреоидит и другие доброкачественные процессы. Риск злокачественности: 0–3%.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytbenign.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidbenign.html"
   },
   {
     "id": 158,
@@ -2367,7 +2367,7 @@
     ],
     "correct": 1,
     "explanation": "Коллоидный узел: обильный густой коллоид (может быть «cracked» — потрескавшийся), доброкачественные фолликулярные клетки в плоских пластах, макрофаги (часто с гемосидерином — при кровоизлиянии в кисту).",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytbenign.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidbenign.html"
   },
   {
     "id": 159,
@@ -2382,7 +2382,7 @@
     ],
     "correct": 1,
     "explanation": "Тиреоидит Хашимото: полиморфная лимфоидная популяция (малые и трансформированные лимфоциты, плазматические клетки), клетки Гюртле (онкоцитарная метаплазия), лимфоидные фолликулы. Коллоид обычно скудный.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytbenign.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidbenign.html"
   },
   {
     "id": 160,
@@ -2397,7 +2397,7 @@
     ],
     "correct": 1,
     "explanation": "Подострый тиреоидит де Кервена: многоядерные гигантские клетки (часто с фагоцитированным коллоидом), гранулёмы, смесь воспалительных клеток, повреждённые фолликулярные клетки. Обычно на фоне вирусной инфекции.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytbenign.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidbenign.html"
   },
   {
     "id": 161,
@@ -2412,7 +2412,7 @@
     ],
     "correct": 1,
     "explanation": "AUS/FLUS (Atypia of Undetermined Significance / Follicular Lesion of Undetermined Significance) — «серая зона»: изменения превышают доброкачественные, но недостаточны для определённой категории. Риск злокачественности: 6–18%. Не должна превышать 10% всех ТАБ.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytAUS.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidatypia.html"
   },
   {
     "id": 162,
@@ -2427,7 +2427,7 @@
     ],
     "correct": 2,
     "explanation": "Категория III (AUS/FLUS) не должна превышать ~10% всех ТАБ. Чрезмерное использование может указывать на занижение порога для AUS/FLUS в лаборатории.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytAUS.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidatypia.html"
   },
   {
     "id": 163,
@@ -2442,7 +2442,7 @@
     ],
     "correct": 1,
     "explanation": "Категория IV: высокая клеточность, преобладание микрофолликулов (малые группы клеток вокруг капель коллоида), скудный коллоид. Разграничить фолликулярную аденому от карциномы можно только гистологически (по инвазии капсулы/сосудов).",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytfollicular.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidfollicularneoplasm.html"
   },
   {
     "id": 164,
@@ -2457,7 +2457,7 @@
     ],
     "correct": 0,
     "explanation": "Фолликулярная аденома и фолликулярная карцинома цитологически неразличимы. Диагноз карциномы требует гистологического исследования с оценкой инвазии капсулы и/или сосудов. Поэтому используется термин «фолликулярная неоплазия».",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytfollicular.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidfollicularneoplasm.html"
   },
   {
     "id": 165,
@@ -2472,7 +2472,7 @@
     ],
     "correct": 1,
     "explanation": "Неоплазия из клеток Гюртле (онкоцитарная неоплазия) — подтип категории IV. Клетки Гюртле: крупные, полигональные, с обильной гранулярной цитоплазмой (обилие митохондрий) и круглым центральным ядром с выраженной нуклеолой.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytfollicular.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidfollicularneoplasm.html"
   },
   {
     "id": 166,
@@ -2487,7 +2487,7 @@
     ],
     "correct": 1,
     "explanation": "Категория V чаще всего означает подозрение на папиллярную карциному, когда ядерные признаки ПК присутствуют лишь частично. Риск злокачественности: 45–75%. Тактика: хирургическое вмешательство.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytsuspicious.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidsuspicious.html"
   },
   {
     "id": 167,
@@ -2502,7 +2502,7 @@
     ],
     "correct": 1,
     "explanation": "Диагностическая триада ПК: (1) ядерные борозды (longitudinal grooves), (2) внутриядерные цитоплазматические псевдовключения (INCI), (3) просветлённый «пустой» хроматин (Orphan Annie eyes). Также: увеличение и вытянутость ядер, перекрытие ядер (nuclear crowding).",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytmalignant.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidmalignant.html"
   },
   {
     "id": 168,
@@ -2517,7 +2517,7 @@
     ],
     "correct": 2,
     "explanation": "Обильный коллоид с макрофагами без ядерных изменений — признак доброкачественного коллоидного узла (категория II), а не папиллярной карциномы. ПК может быть папиллярной, фолликулярной или смешанной архитектуры.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytmalignant.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidmalignant.html"
   },
   {
     "id": 169,
@@ -2532,7 +2532,7 @@
     ],
     "correct": 1,
     "explanation": "Медуллярная карцинома происходит из С-клеток (парафолликулярных), продуцирующих кальцитонин. Цитология: разрозненные плазмоцитоидные или веретеновидные клетки, эксцентричные ядра, амилоид в строме. Окрашивание Congo Red/кальцитонин.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytmalignant.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidmalignant.html"
   },
   {
     "id": 170,
@@ -2547,7 +2547,7 @@
     ],
     "correct": 1,
     "explanation": "Анапластическая карцинома: выраженный полиморфизм клеток (гигантские, веретеновидные, плеоморфные), некроз, высокая митотическая активность. Одна из наиболее агрессивных опухолей человека.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytmalignant.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidmalignant.html"
   },
   {
     "id": 171,
@@ -2562,7 +2562,7 @@
     ],
     "correct": 1,
     "explanation": "Риск злокачественности (по TBSRTC 3rd edition): I — 5–10%, II — 0–3%, III — 6–18%, IV — 10–40%, V — 45–75%, VI — 94–99%. Эти данные определяют тактику ведения пациента.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytbethesda.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroiddiagnostic.html"
   },
   {
     "id": 172,
@@ -2577,7 +2577,7 @@
     ],
     "correct": 1,
     "explanation": "При категории II (доброкачественный) рекомендуется клиническое наблюдение с УЗИ-контролем. Повторная ТАБ может быть показана при росте узла или появлении подозрительных УЗИ-признаков.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytbethesda.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroiddiagnostic.html"
   },
   {
     "id": 173,
@@ -2592,7 +2592,7 @@
     ],
     "correct": 1,
     "explanation": "При категории IV рекомендуется диагностическая лобэктомия (хирургическое удаление доли) для гистологической оценки инвазии. Альтернатива — молекулярное тестирование (Afirma, ThyroSeq) для стратификации риска.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytbethesda.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroiddiagnostic.html"
   },
   {
     "id": 174,
@@ -2607,7 +2607,7 @@
     ],
     "correct": 1,
     "explanation": "При категории V рекомендуется хирургическое вмешательство — лобэктомия или тотальная тиреоидэктомия (в зависимости от клинических факторов). Риск злокачественности 45–75% слишком высок для наблюдения.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytsuspicious.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidsuspicious.html"
   },
   {
     "id": 175,
@@ -2622,7 +2622,7 @@
     ],
     "correct": 1,
     "explanation": "Клетки Гюртле (онкоциты) — фолликулярные клетки с онкоцитарной метаплазией: крупные, полигональные, с обильной гранулярной эозинофильной цитоплазмой (из-за обилия митохондрий). Часто встречаются при тиреоидите Хашимото.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytbenign.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidbenign.html"
   },
   {
     "id": 176,
@@ -2637,7 +2637,7 @@
     ],
     "correct": 1,
     "explanation": "Категория III включает «пограничные» случаи: фокальные ядерные борозды (недостаточные для ПК), артефакты приготовления, атипия на фоне тиреоидита, или микрофолликулярные группы недостаточные для категории IV.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytAUS.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidatypia.html"
   },
   {
     "id": 177,
@@ -2652,7 +2652,7 @@
     ],
     "correct": 1,
     "explanation": "INCI (Intranuclear Cytoplasmic Inclusions) — инвагинация цитоплазмы внутрь ядра через борозду ядерной мембраны. Выглядят как чёткое округлое эозинофильное включение. Высокоспецифичный признак папиллярной карциномы.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytmalignant.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidmalignant.html"
   },
   {
     "id": 178,
@@ -2667,7 +2667,7 @@
     ],
     "correct": 1,
     "explanation": "Псаммомные тельца — слоистые кальцификаты округлой формы. В контексте ТАБ щитовидной железы они высокоспецифичны для папиллярной карциномы. Однако их чувствительность невысока — присутствуют не во всех случаях ПК.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytmalignant.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidmalignant.html"
   },
   {
     "id": 179,
@@ -2682,7 +2682,7 @@
     ],
     "correct": 1,
     "explanation": "Молекулярное тестирование (Afirma GSC, ThyroSeq v3, и др.) помогает стратифицировать риск при категориях III и IV: «rule-out» тесты (высокая NPV) позволяют избежать операции, «rule-in» (высокая PPV) — подтвердить необходимость хирургии.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytbethesda.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroiddiagnostic.html"
   },
   {
     "id": 180,
@@ -2697,6 +2697,6 @@
     ],
     "correct": 1,
     "explanation": "Папиллярная карцинома — самый частый злокачественный тумор щитовидной железы (~85%). Фолликулярная — ~10%, медуллярная — ~3–5%, анапластическая — ~1–2%. Прогноз ПК обычно благоприятный.",
-    "reference_url": "https://www.pathologyoutlines.com/topic/thyroidcytbethesda.html"
+    "reference_url": "https://www.pathologyoutlines.com/topic/thyroiddiagnostic.html"
   }
 ]
