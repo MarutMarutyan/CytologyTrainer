@@ -2,6 +2,7 @@
  * Команда /admin — статистика пользователей (только для владельца)
  */
 const { getUserStats } = require('../users');
+const { postQuestionOfDay } = require('../scheduler');
 
 function registerAdminHandler(bot) {
   bot.command('admin', async (ctx) => {
@@ -38,6 +39,22 @@ function registerAdminHandler(bot) {
     }
 
     ctx.reply(text, { parse_mode: 'Markdown' });
+  });
+
+  bot.command('testpost', async (ctx) => {
+    const adminId = process.env.ADMIN_TELEGRAM_ID;
+    const userId = String(ctx.from.id);
+
+    if (!adminId || userId !== adminId) {
+      return ctx.reply('Команда недоступна.');
+    }
+
+    try {
+      await postQuestionOfDay(bot);
+      ctx.reply('✅ Тестовый пост опубликован в канале!');
+    } catch (err) {
+      ctx.reply(`❌ Ошибка: ${err.message}`);
+    }
   });
 }
 
