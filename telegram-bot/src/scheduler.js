@@ -21,11 +21,11 @@ async function postQuestionOfDay(bot) {
     `🔬 *Вопрос дня*\n\n` +
     `${q.question}\n\n` +
     `${options}\n\n` +
-    `||✅ Ответ: *${correct}. ${q.options[q.correct]}*\n\n` +
-    `${q.explanation}||\n\n` +
+    `✅ Ответ: *${correct}. ${q.options[q.correct]}*\n\n` +
+    `${q.explanation}\n\n` +
     `📚 Учись в боте → @CytoBot_bot`;
 
-  await bot.telegram.sendMessage(CHANNEL_ID, text, { parse_mode: 'MarkdownV2' });
+  await bot.telegram.sendMessage(CHANNEL_ID, text, { parse_mode: 'Markdown' });
 }
 
 // Пост "Факт недели" (понедельник)
