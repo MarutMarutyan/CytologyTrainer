@@ -4,15 +4,24 @@
 const { getUserStats } = require('../users');
 
 function registerAdminHandler(bot) {
-  bot.command('admin', (ctx) => {
+  bot.command('admin', async (ctx) => {
     const adminId = process.env.ADMIN_TELEGRAM_ID;
+    const userId = String(ctx.from.id);
+
+    console.log(`/admin запрошен пользователем ${userId}, adminId=${adminId}`);
 
     // Проверяем что это владелец
-    if (!adminId || String(ctx.from.id) !== String(adminId)) {
+    if (!adminId || userId !== String(adminId)) {
       return ctx.reply('Команда недоступна.');
     }
 
-    const { total, today, week, recent } = getUserStats();
+    let total = 0, today = 0, week = 0, recent = [];
+    try {
+      const stats = getUserStats();
+      total = stats.total; today = stats.today; week = stats.week; recent = stats.recent;
+    } catch (err) {
+      console.error('Ошибка getUserStats:', err.message);
+    }
 
     let text = `📊 *Статистика CytologyTrainer*\n\n`;
     text += `👥 Всего пользователей: *${total}*\n`;

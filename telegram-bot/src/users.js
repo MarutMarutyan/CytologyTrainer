@@ -16,7 +16,11 @@ function loadUsers() {
 }
 
 function saveUsers(users) {
-  fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
+  try {
+    fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
+  } catch (err) {
+    console.error('Не удалось сохранить users.json:', err.message);
+  }
 }
 
 function trackUser(ctx) {
