@@ -5,6 +5,7 @@ const { registerStartHandler } = require('./handlers/start');
 const { registerTestHandler } = require('./handlers/test');
 const { registerStatsHandler } = require('./handlers/stats');
 const { registerHelpHandler } = require('./handlers/help');
+const { registerLearnHandler } = require('./handlers/learn');
 
 // Проверяем токен
 if (!process.env.TELEGRAM_BOT_TOKEN) {
@@ -17,6 +18,7 @@ const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 // Регистрируем обработчики
 registerStartHandler(bot);
 registerHelpHandler(bot);
+registerLearnHandler(bot);
 registerStatsHandler(bot);
 registerTestHandler(bot);
 

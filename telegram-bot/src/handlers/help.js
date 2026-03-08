@@ -7,6 +7,7 @@ function registerHelpHandler(bot) {
       '*CytologyTrainer Bot — помощь*\n\n' +
       '*Команды:*\n' +
       '/start — приветствие и начало работы\n' +
+      '/learn — изучить теорию по темам\n' +
       '/test — пройти тест по цитологии\n' +
       '/stats — твоя статистика и прогресс\n' +
       '/help — эта справка\n\n' +
