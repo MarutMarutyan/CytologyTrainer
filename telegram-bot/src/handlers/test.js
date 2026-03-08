@@ -1,4 +1,5 @@
 const allQuestions = require('../data/questions.json');
+const { recordTestResult } = require('../stats');
 
 // Хранилище активных сессий: userId -> { questions, questionIndex, score }
 const sessions = new Map();
@@ -63,6 +64,8 @@ async function startTest(ctx, userId, testQuestions, title) {
     questions: selected,
     questionIndex: 0,
     score: 0,
+    category: title.includes('все темы') ? 'all' : selected[0].category,
+    answers: [],
   });
 
   await ctx.reply(
@@ -159,6 +162,12 @@ function registerTestHandler(bot) {
       };
     }
 
+    session.answers.push({
+      id: q.id,
+      category: q.category,
+      correct: isCorrect,
+    });
+
     if (isCorrect) {
       session.score++;
       await ctx.reply('✅ Верно!\n\n' + q.explanation, replyOptions);
@@ -178,6 +187,14 @@ function registerTestHandler(bot) {
       const percent = Math.round((session.score / total) * 100);
       let emoji = percent >= 80 ? '🎉' : percent >= 50 ? '👍' : '📚';
 
+      // Сохраняем результат
+      recordTestResult(userId, {
+        category: session.category,
+        total,
+        correct: session.score,
+        questions: session.answers,
+      });
+
       await ctx.reply(
         `${emoji} *Тест завершён!*\n\n` +
         `Результат: *${session.score} из ${total}* (${percent}%)\n\n` +
@@ -186,7 +203,8 @@ function registerTestHandler(bot) {
           : percent >= 50
           ? 'Неплохо! Есть над чем поработать.'
           : 'Рекомендуем повторить материал и попробовать снова.') +
-        '\n\nДля нового теста нажми /test',
+        '\n\n📊 /stats — посмотреть свою статистику\n' +
+        'Для нового теста нажми /test',
         { parse_mode: 'Markdown' }
       );
 
