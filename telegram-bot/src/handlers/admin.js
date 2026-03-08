@@ -8,9 +8,6 @@ function registerAdminHandler(bot) {
     const adminId = process.env.ADMIN_TELEGRAM_ID;
     const userId = String(ctx.from.id);
 
-    // Временный отладочный ответ
-    await ctx.reply(`DEBUG: userId=${userId}, adminId=${adminId}`);
-
     if (!adminId || userId !== adminId) {
       return ctx.reply('Команда недоступна.');
     }

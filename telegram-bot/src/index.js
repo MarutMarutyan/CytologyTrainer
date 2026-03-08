@@ -22,13 +22,8 @@ registerStartHandler(bot);
 registerHelpHandler(bot);
 registerLearnHandler(bot);
 registerStatsHandler(bot);
-registerTestHandler(bot);
 registerAdminHandler(bot);
-
-// Прямая регистрация /admin для отладки
-bot.command('admintest', (ctx) => {
-  ctx.reply('admintest работает! id=' + ctx.from.id);
-});
+registerTestHandler(bot);
 
 // Трекинг всех входящих сообщений
 bot.on('message', (ctx) => trackUser(ctx));
