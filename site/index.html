@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CytologyTrainer — бесплатная платформа для изучения клинической цитологии. Тесты и теория по системе Bethesda и TBSRTC.">
+    <title>CytologyTrainer — Изучай цитологию с телефона</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --deep: #0a0f1a;
+            --navy: #1a2332;
+            --navy-light: #243044;
+            --teal: #00b4d8;
+            --teal-glow: #00d4ff;
+            --teal-dark: #0090ad;
+            --mint: #7efcf6;
+            --white: #f0f4f8;
+            --white-dim: #b0bec5;
+            --accent: #ff6b9d;
+            --glass: rgba(26, 35, 50, 0.65);
+            --glass-border: rgba(0, 180, 216, 0.15);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--deep);
+            color: var(--white);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== CUSTOM SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--deep); }
+        ::-webkit-scrollbar-thumb { background: var(--teal-dark); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--teal); }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 15, 26, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0.8rem 2rem;
+        }
+
+        .nav-logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-logo .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--teal), var(--mint));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--white-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: color 0.3s;
+            letter-spacing: 0.01em;
+        }
+
+        .nav-links a:hover { color: var(--teal); }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+            color: var(--deep) !important;
+            font-weight: 600 !important;
+            padding: 0.55rem 1.3rem;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s !important;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 180, 216, 0.35);
+            color: var(--deep) !important;
+        }
+
+        .nav-burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .nav-burger span {
+            width: 24px;
+            height: 2px;
+            background: var(--white);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: linear-gradient(to top, var(--deep), transparent);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 0.4rem 1.2rem;
+            font-size: 0.8rem;
+            color: var(--teal);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            animation: fadeInDown 0.8s ease both;
+        }
+
+        .hero-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--teal);
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--teal), var(--mint), var(--teal-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-family: 'Source Serif 4', serif;
+            font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+            color: var(--white-dim);
+            line-height: 1.6;
+            max-width: 560px;
+            margin: 0 auto 2.5rem;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+            color: var(--deep);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            padding: 1rem 2.2rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 180, 216, 0.4);
+        }
+
+        .btn-primary svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s;
+        }
+
+        .btn-primary:hover svg { transform: translateX(3px); }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--glass);
+            color: var(--white);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 500;
+            padding: 1rem 2.2rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 180, 216, 0.1);
+            border-color: var(--teal);
+            transform: translateY(-2px);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+            animation: fadeInUp 0.8s ease 0.8s both;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .num {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--teal);
+            letter-spacing: -0.02em;
+        }
+
+        .hero-stat .label {
+            font-size: 0.8rem;
+            color: var(--white-dim);
+            margin-top: 0.3rem;
+            letter-spacing: 0.02em;
+        }
+
+        /* ===== SECTIONS COMMON ===== */
+        section {
+            padding: 7rem 2rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 24px;
+            height: 2px;
+            background: var(--teal);
+            border-radius: 1px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+        }
+
+        .section-desc {
+            font-family: 'Source Serif 4', serif;
+            font-size: 1.1rem;
+            color: var(--white-dim);
+            line-height: 1.7;
+            max-width: 600px;
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== ABOUT ===== */
+        .about {
+            background: linear-gradient(180deg, var(--deep) 0%, var(--navy) 50%, var(--deep) 100%);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .about-visual {
+            position: relative;
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            background: var(--navy-light);
+        }
+
+        .microscope-view {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #1a2840, #0a0f1a);
+        }
+
+        .cell {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid;
+            opacity: 0.6;
+            animation: floatCell linear infinite;
+        }
+
+        @keyframes floatCell {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(15px, -20px) rotate(90deg) scale(1.05); }
+            50% { transform: translate(-10px, -35px) rotate(180deg) scale(0.95); }
+            75% { transform: translate(-20px, -15px) rotate(270deg) scale(1.02); }
+            100% { transform: translate(0, 0) rotate(360deg) scale(1); }
+        }
+
+        .microscope-crosshair {
+            position: absolute;
+            inset: 0;
+            border: 2px solid rgba(0, 180, 216, 0.1);
+            border-radius: 50%;
+            margin: 15%;
+        }
+
+        .microscope-crosshair::before,
+        .microscope-crosshair::after {
+            content: '';
+            position: absolute;
+            background: rgba(0, 180, 216, 0.15);
+        }
+
+        .microscope-crosshair::before {
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+        }
+
+        .microscope-crosshair::after {
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+        }
+
+        .about-text-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .about-text-content p {
+            font-family: 'Source Serif 4', serif;
+            font-size: 1.05rem;
+            color: var(--white-dim);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .about-tag {
+            background: rgba(0, 180, 216, 0.08);
+            border: 1px solid rgba(0, 180, 216, 0.2);
+            color: var(--teal);
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+        }
+
+        /* ===== FEATURES ===== */
+        .features { overflow: hidden; }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3.5rem;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(0, 180, 216, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(0, 180, 216, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            letter-spacing: -0.01em;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--white-dim);
+            line-height: 1.6;
+        }
+
+        .feature-card .feature-num {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 3rem;
+            font-weight: 800;
+            color: rgba(0, 180, 216, 0.06);
+            line-height: 1;
+        }
+
+        /* ===== HOW IT WORKS ===== */
+        .how-it-works {
+            background: linear-gradient(180deg, var(--deep) 0%, var(--navy) 50%, var(--deep) 100%);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3.5rem;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 48px;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--teal-dark), transparent);
+            z-index: 0;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            border: 2px solid var(--teal-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+            transition: all 0.4s;
+        }
+
+        .step:hover .step-number {
+            border-color: var(--teal);
+            box-shadow: 0 0 30px rgba(0, 180, 216, 0.3);
+            transform: scale(1.08);
+        }
+
+        .step h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .step p {
+            font-size: 0.9rem;
+            color: var(--white-dim);
+            line-height: 1.6;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        /* ===== AUDIENCE ===== */
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3.5rem;
+        }
+
+        .audience-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .audience-card:hover {
+            border-color: rgba(0, 180, 216, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .audience-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .audience-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .audience-card p {
+            font-size: 0.82rem;
+            color: var(--white-dim);
+            line-height: 1.5;
+        }
+
+        /* ===== AUTHOR ===== */
+        .author {
+            background: linear-gradient(180deg, var(--deep) 0%, var(--navy) 50%, var(--deep) 100%);
+        }
+
+        .author-card {
+            max-width: 700px;
+            margin: 3rem auto 0;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 3rem;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .author-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--teal-dark), var(--navy-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            flex-shrink: 0;
+            border: 3px solid var(--glass-border);
+        }
+
+        .author-info h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .author-info .author-role {
+            color: var(--teal);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .author-info p {
+            font-family: 'Source Serif 4', serif;
+            font-size: 0.95rem;
+            color: var(--white-dim);
+            line-height: 1.7;
+        }
+
+        /* ===== CTA ===== */
+        .cta {
+            text-align: center;
+            padding: 8rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 180, 216, 0.12), transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .cta h2 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            letter-spacing: -0.02em;
+        }
+
+        .cta p {
+            font-family: 'Source Serif 4', serif;
+            font-size: 1.15rem;
+            color: var(--white-dim);
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .cta .btn-primary { position: relative; font-size: 1.15rem; padding: 1.1rem 2.8rem; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            border-top: 1px solid var(--glass-border);
+            padding: 2.5rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .footer-left .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--teal), var(--mint));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+        }
+
+        .footer-right {
+            font-size: 0.8rem;
+            color: var(--white-dim);
+        }
+
+        .footer-right a {
+            color: var(--teal);
+            text-decoration: none;
+        }
+
+        .footer-right a:hover { text-decoration: underline; }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .audience-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-burger { display: flex; }
+
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 15, 26, 0.97);
+                backdrop-filter: blur(20px);
+                padding: 1.5rem 2rem;
+                gap: 1rem;
+                border-bottom: 1px solid var(--glass-border);
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-visual { height: 280px; }
+
+            .features-grid { grid-template-columns: 1fr; }
+
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .steps::before { display: none; }
+
+            .audience-grid { grid-template-columns: 1fr; }
+
+            .hero-stats { gap: 1.5rem; }
+
+            .author-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="nav-logo">
+            <span class="logo-icon">🔬</span>
+            CytologyTrainer
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about">О платформе</a></li>
+            <li><a href="#features">Возможности</a></li>
+            <li><a href="#how">Как работает</a></li>
+            <li><a href="#audience">Для кого</a></li>
+            <li><a href="https://t.me/CytologyTrainerBot" target="_blank" class="nav-cta">Начать</a></li>
+        </ul>
+        <button class="nav-burger" id="burger" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+        <canvas class="hero-canvas" id="heroCanvas"></canvas>
+        <div class="hero-gradient"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="pulse"></span>
+                Бесплатно и на русском языке
+            </div>
+            <h1>
+                <span class="gradient-text">Цитология</span><br>
+                в твоём кармане
+            </h1>
+            <p>Учись клинической цитологии с телефона, в своём темпе. Тесты и теория по системам Bethesda и&nbsp;TBSRTC — через Telegram&#8209;бота.</p>
+            <div class="hero-buttons">
+                <a href="https://t.me/CytologyTrainerBot" target="_blank" class="btn-primary">
+                    Начать бесплатно
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#features" class="btn-secondary">Узнать больше</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="num">180+</div>
+                    <div class="label">вопросов</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="num">10</div>
+                    <div class="label">тем теории</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="num">2</div>
+                    <div class="label">направления</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="reveal">
+                <div class="section-label">О платформе</div>
+                <div class="section-title">Что такое CytologyTrainer?</div>
+            </div>
+            <div class="about-grid">
+                <div class="about-visual reveal">
+                    <div class="microscope-view" id="microscopeView">
+                        <div class="microscope-crosshair"></div>
+                    </div>
+                </div>
+                <div class="about-text-content reveal">
+                    <h3>Бесплатная платформа для изучения клинической цитологии</h3>
+                    <p>CytologyTrainer — это Telegram-бот, который помогает врачам-лаборантам и студентам изучать цитологию через интерактивные тесты и структурированную теорию.</p>
+                    <p>Все вопросы составлены по международным системам классификации: <strong style="color: var(--teal)">The Bethesda System</strong> для гинекологической цитологии и <strong style="color: var(--teal)">TBSRTC</strong> для цитологии щитовидной железы.</p>
+                    <div class="about-tags">
+                        <span class="about-tag">Bethesda System</span>
+                        <span class="about-tag">TBSRTC</span>
+                        <span class="about-tag">Telegram-бот</span>
+                        <span class="about-tag">Бесплатно</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="reveal" style="text-align: center; margin-bottom: 1rem;">
+                <div class="section-label" style="justify-content: center;">Возможности</div>
+                <div class="section-title">Всё для изучения цитологии</div>
+                <p class="section-desc" style="margin: 0 auto;">Тесты, теория, статистика — в одном боте</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card reveal">
+                    <div class="feature-num">01</div>
+                    <div class="feature-icon">📝</div>
+                    <h3>180+ тестовых вопросов</h3>
+                    <p>Вопросы по 14 категориям с объяснениями правильных ответов и ссылками на источники</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-num">02</div>
+                    <div class="feature-icon">📖</div>
+                    <h3>Теория по темам</h3>
+                    <p>Структурированные материалы по каждой диагностической категории с навигацией</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-num">03</div>
+                    <div class="feature-icon">🔬</div>
+                    <h3>Гинекологическая цитология</h3>
+                    <p>150 вопросов по системе Bethesda: NILM, ASC, LSIL, HSIL, железистые поражения</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-num">04</div>
+                    <div class="feature-icon">🦋</div>
+                    <h3>Щитовидная железа</h3>
+                    <p>30 вопросов по системе TBSRTC: категории I–VI, критерии диагностики</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-num">05</div>
+                    <div class="feature-icon">📊</div>
+                    <h3>Статистика прогресса</h3>
+                    <p>Отслеживай свои результаты по каждой теме, находи слабые места</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="feature-num">06</div>
+                    <div class="feature-icon">🔗</div>
+                    <h3>Ссылки на атлас IARC</h3>
+                    <p>Каждый ответ содержит ссылку на фотографии из атласа для визуального обучения</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-it-works" id="how">
+        <div class="container">
+            <div class="reveal" style="text-align: center; margin-bottom: 1rem;">
+                <div class="section-label" style="justify-content: center;">Как это работает</div>
+                <div class="section-title">Три простых шага</div>
+                <p class="section-desc" style="margin: 0 auto;">Начни учиться прямо сейчас — нужен только Telegram</p>
+            </div>
+            <div class="steps">
+                <div class="step reveal">
+                    <div class="step-number">💬</div>
+                    <h3>Открой бота</h3>
+                    <p>Найди @CytologyTrainerBot в Telegram и нажми /start</p>
+                </div>
+                <div class="step reveal">
+                    <div class="step-number">🎯</div>
+                    <h3>Выбери тему</h3>
+                    <p>Гинекологическая цитология или щитовидная железа — выбирай что изучать</p>
+                </div>
+                <div class="step reveal">
+                    <div class="step-number">🏆</div>
+                    <h3>Проходи тесты</h3>
+                    <p>Отвечай на вопросы, изучай теорию, отслеживай прогресс</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audience -->
+    <section class="audience" id="audience">
+        <div class="container">
+            <div class="reveal" style="text-align: center; margin-bottom: 1rem;">
+                <div class="section-label" style="justify-content: center;">Для кого</div>
+                <div class="section-title">Кому подойдёт CytologyTrainer</div>
+            </div>
+            <div class="audience-grid">
+                <div class="audience-card reveal">
+                    <div class="audience-icon">🩺</div>
+                    <h3>Врачи-лаборанты</h3>
+                    <p>Повышение квалификации и подготовка к аттестации</p>
+                </div>
+                <div class="audience-card reveal">
+                    <div class="audience-icon">🎓</div>
+                    <h3>Ординаторы</h3>
+                    <p>Углублённое изучение цитологической диагностики</p>
+                </div>
+                <div class="audience-card reveal">
+                    <div class="audience-icon">📚</div>
+                    <h3>Студенты медвузов</h3>
+                    <p>Подготовка к экзаменам по клинической лабораторной диагностике</p>
+                </div>
+                <div class="audience-card reveal">
+                    <div class="audience-icon">🔬</div>
+                    <h3>Цитологи</h3>
+                    <p>Самопроверка знаний по системам Bethesda и TBSRTC</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Author -->
+    <section class="author" id="author">
+        <div class="container">
+            <div class="reveal" style="text-align: center;">
+                <div class="section-label" style="justify-content: center;">Автор проекта</div>
+                <div class="section-title">Создано практикующим врачом</div>
+            </div>
+            <div class="author-card reveal">
+                <div class="author-avatar">👨‍⚕️</div>
+                <div class="author-info">
+                    <h3>Марут Марутян</h3>
+                    <div class="author-role">Врач клинической лабораторной диагностики</div>
+                    <p>CytologyTrainer создан практикующим специалистом, который знает, как трудно найти качественные материалы по цитологии на русском языке. Каждый вопрос и тема проверены на основе международных руководств.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="cta-glow"></div>
+        <div class="container reveal">
+            <h2>Готов начать обучение?</h2>
+            <p>Присоединяйся бесплатно — нужен только Telegram</p>
+            <a href="https://t.me/CytologyTrainerBot" target="_blank" class="btn-primary">
+                Открыть CytologyTrainerBot
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <span class="logo-icon">🔬</span>
+                CytologyTrainer
+            </div>
+            <div class="footer-right">
+                &copy; 2025 CytologyTrainer &middot;
+                <a href="https://t.me/CytologyTrainerBot" target="_blank">Telegram-бот</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== HERO CANVAS — FLOATING CELLS =====
+        const canvas = document.getElementById('heroCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animFrame;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Cell {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 30 + 10;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.15 + 0.05;
+                this.hue = Math.random() > 0.5 ? 190 : 170;
+                this.nucleusRatio = Math.random() * 0.3 + 0.25;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.005;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+
+                if (this.x < -50 || this.x > canvas.width + 50 ||
+                    this.y < -50 || this.y > canvas.height + 50) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.globalAlpha = this.opacity;
+
+                // Cell membrane
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.size, this.size * 0.85, 0, 0, Math.PI * 2);
+                ctx.strokeStyle = `hsl(${this.hue}, 80%, 55%)`;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // Cytoplasm
+                ctx.fillStyle = `hsla(${this.hue}, 60%, 40%, 0.15)`;
+                ctx.fill();
+
+                // Nucleus
+                ctx.beginPath();
+                ctx.arc(this.size * 0.1, -this.size * 0.05, this.size * this.nucleusRatio, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${this.hue}, 70%, 50%, 0.3)`;
+                ctx.fill();
+                ctx.strokeStyle = `hsl(${this.hue}, 70%, 50%)`;
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            const count = Math.min(Math.floor(window.innerWidth / 30), 45);
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                particles.push(new Cell());
+            }
+        }
+
+        function animateHero() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            animFrame = requestAnimationFrame(animateHero);
+        }
+
+        resizeCanvas();
+        initParticles();
+        animateHero();
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+
+        // ===== MICROSCOPE VIEW CELLS =====
+        const microscopeView = document.getElementById('microscopeView');
+        if (microscopeView) {
+            const colors = ['#00b4d8', '#7efcf6', '#ff6b9d', '#90e0ef', '#48cae4'];
+            for (let i = 0; i < 12; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                const size = Math.random() * 40 + 15;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                cell.style.cssText = `
+                    width: ${size}px;
+                    height: ${size * (0.8 + Math.random() * 0.4)}px;
+                    border-color: ${color};
+                    background: ${color}15;
+                    left: ${Math.random() * 80 + 10}%;
+                    top: ${Math.random() * 80 + 10}%;
+                    animation-duration: ${8 + Math.random() * 12}s;
+                    animation-delay: -${Math.random() * 10}s;
+                `;
+
+                // Nucleus
+                const nucleus = document.createElement('div');
+                nucleus.style.cssText = `
+                    position: absolute;
+                    width: ${size * 0.35}px;
+                    height: ${size * 0.35}px;
+                    background: ${color}30;
+                    border: 1px solid ${color}60;
+                    border-radius: 50%;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                `;
+                cell.appendChild(nucleus);
+                microscopeView.appendChild(cell);
+            }
+        }
+
+        // ===== NAVBAR SCROLL =====
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ===== MOBILE MENU =====
+        const burger = document.getElementById('burger');
+        const navLinks = document.getElementById('navLinks');
+        burger.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('open'));
+        });
+
+        // ===== SCROLL REVEAL =====
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, i * 100);
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        reveals.forEach(el => revealObserver.observe(el));
+
+        // ===== PARALLAX =====
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const heroContent = document.querySelector('.hero-content');
+            if (heroContent && scrolled < window.innerHeight) {
+                heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
+                heroContent.style.opacity = 1 - scrolled / (window.innerHeight * 0.8);
+            }
+        });
+
+        // ===== COUNTER ANIMATION =====
+        const statNums = document.querySelectorAll('.hero-stat .num');
+        let counted = false;
+
+        function animateCounters() {
+            if (counted) return;
+            counted = true;
+            statNums.forEach(num => {
+                const target = parseInt(num.textContent);
+                const suffix = num.textContent.replace(/[0-9]/g, '');
+                let current = 0;
+                const increment = Math.ceil(target / 40);
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    num.textContent = current + suffix;
+                }, 30);
+            });
+        }
+
+        // Start counter when hero is visible
+        setTimeout(animateCounters, 1200);
+    </script>
+</body>
+</html>
