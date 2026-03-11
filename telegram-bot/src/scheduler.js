@@ -45,11 +45,11 @@ async function postWeeklyFact(bot) {
   const fact = random(facts);
 
   const text =
-    `🧠 *Факт недели*\n\n` +
+    `🧠 <b>Факт недели</b>\n\n` +
     `${fact}\n\n` +
     `📖 Проверь знания → @CytoBot_bot`;
 
-  await bot.telegram.sendMessage(CHANNEL_ID, text, { parse_mode: 'Markdown' });
+  await bot.telegram.sendMessage(CHANNEL_ID, text, { parse_mode: 'HTML' });
 }
 
 // Пост "Напоминание" (пятница)
@@ -57,14 +57,14 @@ async function postReminder(bot) {
   if (!CHANNEL_ID) return;
 
   const text =
-    `⚡️ *Конец недели — отличное время для теста!*\n\n` +
+    `⚡️ <b>Конец недели — отличное время для теста!</b>\n\n` +
     `Проверь свои знания по цитологии:\n` +
     `• Гинекологическая цитология (Bethesda)\n` +
     `• Цитология щитовидной железы (TBSRTC)\n\n` +
     `Бесплатно, на русском языке.\n\n` +
     `👉 @CytoBot_bot → /test`;
 
-  await bot.telegram.sendMessage(CHANNEL_ID, text, { parse_mode: 'Markdown' });
+  await bot.telegram.sendMessage(CHANNEL_ID, text, { parse_mode: 'HTML' });
 }
 
 function registerScheduler(bot) {
