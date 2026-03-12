@@ -7,6 +7,7 @@ const { registerStatsHandler } = require('./handlers/stats');
 const { registerHelpHandler } = require('./handlers/help');
 const { registerLearnHandler } = require('./handlers/learn');
 const { registerAdminHandler } = require('./handlers/admin');
+const { registerReferralHandler } = require('./handlers/referral');
 const { trackUser } = require('./users');
 const { registerScheduler } = require('./scheduler');
 
@@ -24,6 +25,7 @@ registerHelpHandler(bot);
 registerLearnHandler(bot);
 registerStatsHandler(bot);
 registerAdminHandler(bot);
+registerReferralHandler(bot);
 registerTestHandler(bot);
 
 // Трекинг всех входящих сообщений
@@ -45,7 +47,8 @@ async function startBot() {
       { command: 'test',   description: '📝 Пройти тест' },
       { command: 'learn',  description: '📖 Теория и учебные материалы' },
       { command: 'stats',  description: '📊 Моя статистика' },
-      { command: 'help',   description: '❓ Помощь и список команд' },
+      { command: 'help',     description: '❓ Помощь и список команд' },
+      { command: 'referral', description: '🔗 Пригласить коллегу (+бонусы)' },
     ]);
   } catch (err) {
     console.error('Ошибка запуска:', err.message);

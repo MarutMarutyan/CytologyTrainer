@@ -73,4 +73,4 @@ function getUserStats() {
   return { total: all.length, today: today.length, week: week.length, recent };
 }
 
-module.exports = { trackUser, getUserStats };
+module.exports = { trackUser, getUserStats, loadUsers, saveUsers };
