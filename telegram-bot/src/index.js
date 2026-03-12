@@ -32,23 +32,29 @@ bot.on('message', (ctx) => trackUser(ctx));
 // Запускаем планировщик постов
 registerScheduler(bot);
 
-// Запускаем бота
-bot.launch()
-  .then(() => {
-    console.log('Бот запущен! Нажми Ctrl+C для остановки.');
-    return bot.telegram.setMyCommands([
+// Запуск: сначала удаляем webhook, потом long polling
+async function startBot() {
+  try {
+    console.log('Удаляю webhook...');
+    await bot.telegram.deleteWebhook({ drop_pending_updates: true });
+    console.log('Webhook удалён. Запускаю long polling...');
+    await bot.launch();
+    console.log('Бот запущен!');
+    await bot.telegram.setMyCommands([
       { command: 'start',  description: '👋 Начать / главное меню' },
       { command: 'test',   description: '📝 Пройти тест' },
       { command: 'learn',  description: '📖 Теория и учебные материалы' },
       { command: 'stats',  description: '📊 Моя статистика' },
       { command: 'help',   description: '❓ Помощь и список команд' },
     ]);
-  })
-  .catch((err) => {
+  } catch (err) {
     console.error('Ошибка запуска:', err.message);
     process.exit(1);
-  });
+  }
+}
 
-// Корректная остановка по Ctrl+C
+startBot();
+
+// Корректная остановка
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
