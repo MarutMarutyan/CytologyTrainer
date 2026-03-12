@@ -47,6 +47,22 @@ function shuffle(arr) {
 }
 
 /**
+ * Перемешивает варианты ответов внутри вопроса, обновляет индекс правильного
+ */
+function shuffleOptions(q) {
+  const indices = [0, 1, 2, 3];
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  return {
+    ...q,
+    options: indices.map(i => q.options[i]),
+    correct: indices.indexOf(q.correct),
+  };
+}
+
+/**
  * Отправляет вопрос пользователю с inline-кнопками
  */
 async function sendQuestion(ctx, session) {
@@ -88,7 +104,7 @@ async function sendQuestion(ctx, session) {
  * Запускает тест с выбранными вопросами
  */
 async function startTest(ctx, userId, testQuestions, title) {
-  const selected = shuffle(testQuestions).slice(0, TEST_SIZE);
+  const selected = shuffle(testQuestions).slice(0, TEST_SIZE).map(shuffleOptions);
 
   sessions.set(userId, {
     questions: selected,
